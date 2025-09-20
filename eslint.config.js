@@ -19,13 +19,9 @@ export default [
       sourceType: "module",
       globals: {
         // Node
-        process: "readonly",
-        console: "readonly",
-        __dirname: "readonly",
-        module: "readonly",
-        require: "readonly",
-        // Testes
-        jest: "readonly"
+        ...globals.node,
+        // Globais de teste (Jest) — IMPORTANTEEEE
+        ...globals.jest,
       }
     },
     rules: {
@@ -36,7 +32,12 @@ export default [
 
   // ajustes específicos para testes
   {
-    files: ["tests/**/*.test.js"],
+    files: ["tests/**/*.test.js", "**/*.test.js", "**/*.spec.js"],
+    languageOptions: {
+      globals: {
+        ...globals.jest
+      }
+    },
     rules: {
       "no-console": "off"
     }
